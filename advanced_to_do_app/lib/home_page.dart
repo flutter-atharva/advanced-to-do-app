@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:to_do_app/task_class.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -19,7 +20,8 @@ class _HomePageState extends State<HomePage> {
   TextEditingController dateController = TextEditingController();
 
   List taskList = [
-    Task(title: "Work on frontend", date: "Mar 18, 2024"),
+    Task(title: "Work on frontend", date: "Mar 25, 2024"),
+    Task(title: "Learn Api Integration", date: "Mar 25, 2024"),
   ];
 
   List colors = [
@@ -53,12 +55,9 @@ class _HomePageState extends State<HomePage> {
     dateController.clear();
   }
 
-  void edit(index) {}
-
   void bottomSheet(bool toEdit, [index]) {
     if (toEdit == true) {
       taskController.text = taskList[index].title;
-
       dateController.text = taskList[index].date;
     }
     showModalBottomSheet(
@@ -91,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
-                          color:  Color.fromRGBO(172, 189, 161, 1),
+                          color: Color.fromRGBO(172, 189, 161, 1),
                         ),
                         borderRadius: BorderRadius.circular(5)),
                     focusedBorder: OutlineInputBorder(
@@ -108,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                 Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Date",
+                      "Deadline",
                       style: GoogleFonts.inriaSerif(fontSize: 17, fontWeight: FontWeight.w800, color: const Color.fromRGBO(31, 28, 29, 1)),
                     )),
                 TextField(
@@ -211,110 +210,102 @@ class _HomePageState extends State<HomePage> {
             height: 30,
           ),
           Expanded(
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                child: ListView.builder(
-                  itemCount: taskList.length,
-                  itemBuilder: (context, index) => Slidable(
-                    endActionPane: ActionPane(
-                      extentRatio: 0.13,
-                      key: ValueKey(index),
-                      motion: const BehindMotion(),
-                      children: [
-                        Column(
-                          children: [
-                            const SizedBox(
-                              height: 25,
-                            ),
-                            IconButton(
-                                onPressed: () {
-                                  toEdit = true;
-                                  bottomSheet(true, index);
-                                },
-                                icon: const Icon(
-                                  Icons.mode_edit_outline_outlined,
-                                  color: Colors.black,
-                                )),
-                            IconButton(
-                                onPressed: () {
-                                  delete(index);
-                                },
-                                icon: const Icon(
-                                  Icons.delete_outline,
-                                  color: Colors.red,
-                                ))
-                          ],
-                        )
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: const [
-                            BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.1), offset: Offset(0, 5), blurRadius: 10, spreadRadius: 1)
-                          ],
-                          borderRadius: BorderRadius.circular(5),
-                          color: colors[index % colors.length],
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 80,
-                                    width: 80,
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      boxShadow: [
-                                        BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.1), offset: Offset(0, 0), blurRadius: 20, spreadRadius: 0)
-                                      ],
-                                      color: Colors.white,
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(80),
-                                      child: Image.network(
-                                        "https://www.taogent.com/noimg/noimg.jpg",
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15),
+              child: ListView.builder(
+                itemCount: taskList.length,
+                itemBuilder: (context, index) => Slidable(
+                  endActionPane: ActionPane(
+                    extentRatio: 0.13,
+                    key: ValueKey(index),
+                    motion: const BehindMotion(),
+                    children: [
+                      Column(
+                        children: [
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                toEdit = true;
+                                bottomSheet(true, index);
+                              },
+                              icon: const Icon(
+                                Icons.mode_edit_outline_outlined,
+                                color: Colors.black,
+                              )),
+                          IconButton(
+                              onPressed: () {
+                                delete(index);
+                              },
+                              icon: const Icon(
+                                Icons.delete_outline,
+                                color: Colors.red,
+                              ))
+                        ],
+                      )
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: const [
+                          BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.1), offset: Offset(0, 5), blurRadius: 10, spreadRadius: 1)
+                        ],
+                        borderRadius: BorderRadius.circular(5),
+                        color: colors[index % colors.length],
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  height: 70,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: RoundCheckBox(
+                                    uncheckedColor: Colors.white,
+                                    size: 50,
+                                    onTap: (selected) {},
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 15,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        taskList[index].title,
+                                        style: GoogleFonts.quicksand(fontSize: 17, fontWeight: FontWeight.w600),
                                       ),
-                                    ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          taskList[index].title,
-                                          style: GoogleFonts.quicksand(fontSize: 17, fontWeight: FontWeight.w600),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
+                                )
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 15, left: 120, bottom: 5),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Deadline: ${taskList[index].date}",
-                                    style: GoogleFonts.quicksand(fontSize: 15, fontWeight: FontWeight.w500, color: const Color.fromRGBO(132, 132, 132, 1)),
-                                  ),
-                                ],
-                              ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15, left: 150, bottom: 5),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Deadline: ${taskList[index].date}",
+                                  style: GoogleFonts.quicksand(fontSize: 15, fontWeight: FontWeight.w500, color: const Color.fromRGBO(132, 132, 132, 1)),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
